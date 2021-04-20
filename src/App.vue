@@ -17,7 +17,8 @@
           <button type="submit" class="btn btn-success">TO THE PIT!!</button>
           <button type="button" class="btn btn-danger" @click="state.addingBot = false">Cancel</button>
         </form>
-        <button label="Add a Bot" title="Add Bot" v-else class="btn btn-info" @click="state.addingBot = true">Add A BOT!</button>
+        <button label="Add a Bot" title="Add Bot" v-else class="btn btn-info" @click="state.addingBot = true">Add A
+          BOT!</button>
       </div>
     </div>
     <div class="row mt-5">
@@ -33,72 +34,75 @@
           'text-danger': bot.health == 0,
           }" class="text-bold">
           {{bot.name}} : {{bot.health}}
-          </h1>
-          <!-- V-if, v-else-if, v-else must be sibling elements -->
-          <p v-if="bot.health === 0">GAME OVER!!!</p>
-          <p v-else-if="bot.health < 50">Almost there!</p>
-          <p v-else>LETS GO!</p>
-        <button type="button" class="btn m-2 btn-primary" @click="clickMe(bot, 1)" :disabled="bot.health == 0">Slap</button>
-        <button type="button" class="btn m-2 btn-warning" @click="clickMe(bot, 5)" :disabled="bot.health == 0">Punch</button>
-        <button type="button" class="btn m-2 btn-danger" @click="clickMe(bot, 10)" :disabled="bot.health == 0">Kick</button>
+        </h1>
+        <!-- V-if, v-else-if, v-else must be sibling elements -->
+        <p v-if="bot.health === 0">GAME OVER!!!</p>
+        <p v-else-if="bot.health < 50">Almost there!</p>
+        <p v-else>LETS GO!</p>
+        <button type="button" class="btn m-2 btn-primary" @click="clickMe(bot, 1)"
+          :disabled="bot.health == 0">Slap</button>
+        <button type="button" class="btn m-2 btn-warning" @click="clickMe(bot, 5)"
+          :disabled="bot.health == 0">Punch</button>
+        <button type="button" class="btn m-2 btn-danger" @click="clickMe(bot, 10)"
+          :disabled="bot.health == 0">Kick</button>
         <div>
           <button type="button" class="btn m-2 btn-success" @click="bot.health = 100">Reset</button>
-      </div>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { reactive } from 'vue'
+  import { reactive } from 'vue'
 
-// NOTE Every single script will need export default object
-export default {
-  // NOTE whatever returns from the setup is accessible in the template, and it must always be an object
-  setup() {
-    // NOTE this is local state only holds data that is unique to this component
-    const state = reactive({
-      myName: 'Mark',
-      newBotName: '',
-      addingBot: false,
-      dark: false,
-      enemies: [
-        {
-          name: 'J752',
-          imgUrl: 'https://robohash.org/J752',
-          health: 100
+  // NOTE Every single script will need export default object
+  export default {
+    // NOTE whatever returns from the setup is accessible in the template, and it must always be an object
+    setup() {
+      // NOTE this is local state only holds data that is unique to this component
+      const state = reactive({
+        myName: 'Mark',
+        newBotName: '',
+        addingBot: false,
+        dark: false,
+        enemies: [
+          {
+            name: 'J752',
+            imgUrl: 'https://robohash.org/J752',
+            health: 100
+          },
+          {
+            name: 'J755',
+            imgUrl: 'https://robohash.org/J755',
+            health: 100
+          },
+          {
+            name: 'R75T',
+            imgUrl: 'https://robohash.org/R75T',
+            health: 100
+          },
+          {
+            name: 'V3R0N1CA',
+            imgUrl: 'https://robohash.org/V3R0N1CA',
+            health: 1000
+          }
+        ]
+      })
+
+      return {
+        state,
+        clickMe(bot, val) {
+          bot.health -= val
+          bot.health = bot.health > 0 ? bot.health : 0
         },
-        {
-          name: 'J755',
-          imgUrl: 'https://robohash.org/J755',
-          health: 100
-        },
-        {
-          name: 'R75T',
-          imgUrl: 'https://robohash.org/R75T',
-          health: 100
-        },
-        {
-          name: 'V3R0N1CA',
-          imgUrl: 'https://robohash.org/V3R0N1CA',
-          health: 1000
+        addBot() {
+          state.enemies.push({ name: state.newBotName, imgUrl: 'https://robohash.org/' + state.newBotName, health: 100 })
+          state.newBotName = ''
         }
-      ]
-    })
-
-    return {
-      state,
-      clickMe(bot, val) {
-        bot.health -= val
-        bot.health = bot.health > 0 ? bot.health : 0
-      },
-      addBot() {
-        state.enemies.push({ name: state.newBotName, imgUrl: 'https://robohash.org/' + state.newBotName, health: 100 })
-        state.newBotName = ''
       }
     }
   }
-}
 </script>
 
 <style>
